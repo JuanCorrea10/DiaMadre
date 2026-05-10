@@ -332,14 +332,18 @@ h2 { font-size: clamp(2.2rem, 5vw, 3.5rem); }
     line-height: 1.9;
 }
 
-/* En móvil: una sola columna y la imagen ya no es sticky */
+/* En móvil: una sola columna y la imagen ya no es sticky.
+   IMPORTANTE: usamos position: relative (no static) porque las imágenes
+   de dentro están en position: absolute y necesitan un ancestro posicionado.
+   Si pusiéramos static, las imágenes se "saldrían" y llenarían toda la pantalla. */
 @media (max-width: 768px) {
     .favorito {
         grid-template-columns: 1fr;
         gap: 2rem;
     }
     .favorito-imagen {
-        position: static;
+        position: relative;
+        top: auto;                /* anula el top: 5rem del sticky */
     }
     .favorito-texto .seccion-encabezado {
         text-align: center;
