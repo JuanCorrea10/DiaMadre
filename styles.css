@@ -280,9 +280,11 @@ h2 { font-size: clamp(2.2rem, 5vw, 3.5rem); }
     position: sticky;
     top: 5rem;                   /* a 5rem del borde superior cuando se "pegue" */
 
-    /* === Slideshow de 2 fotos con crossfade ===
-       El padre define el "marco": tamaño, esquinas redondeadas y sombra.
-       Las imágenes irán superpuestas dentro, en posición absoluta. */
+    /* === Slideshow de 2 fotos con crossfade (técnica grid-stacking) ===
+       El padre es un grid de UNA sola celda. Las imágenes (más abajo) se
+       meten todas en esa misma celda → quedan apiladas naturalmente,
+       SIN necesidad de position: absolute. Más robusto en móvil. */
+    display: grid;
     aspect-ratio: 4 / 5;
     border-radius: 4px;
     overflow: hidden;            /* recorta lo que se salga del marco redondeado */
@@ -290,10 +292,9 @@ h2 { font-size: clamp(2.2rem, 5vw, 3.5rem); }
 }
 
 .favorito-imagen img {
-    /* position: absolute + inset: 0 = la imagen llena completamente al padre,
-       una encima de otra (apiladas). */
-    position: absolute;
-    inset: 0;
+    /* grid-area: 1 / 1 = "ponme en la fila 1, columna 1".
+       Como ambas imágenes tienen lo mismo, se apilan en la misma celda. */
+    grid-area: 1 / 1;
     width: 100%;
     height: 100%;
     object-fit: cover;
@@ -333,16 +334,15 @@ h2 { font-size: clamp(2.2rem, 5vw, 3.5rem); }
 }
 
 /* En móvil: una sola columna y la imagen ya no es sticky.
-   IMPORTANTE: usamos position: relative (no static) porque las imágenes
-   de dentro están en position: absolute y necesitan un ancestro posicionado.
-   Si pusiéramos static, las imágenes se "saldrían" y llenarían toda la pantalla. */
+   Ahora podemos usar position: static sin problema porque las imágenes
+   están dentro del grid del padre, no posicionadas absolutamente. */
 @media (max-width: 768px) {
     .favorito {
         grid-template-columns: 1fr;
         gap: 2rem;
     }
     .favorito-imagen {
-        position: relative;
+        position: static;
         top: auto;                /* anula el top: 5rem del sticky */
     }
     .favorito-texto .seccion-encabezado {
