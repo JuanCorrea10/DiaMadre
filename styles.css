@@ -1,0 +1,503 @@
+/* =========================================================
+   1. IMPORTAR TIPOGRAFÍAS
+   Dancing Script para títulos (manuscrita)
+   Inter para el cuerpo de texto (sans-serif limpia)
+   ========================================================= */
+@import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@500;700&family=Inter:wght@300;400;500;600&display=swap');
+
+
+/* =========================================================
+   2. VARIABLES GLOBALES
+   :root es el elemento <html>. Lo que se define aquí
+   está disponible en TODO el CSS con var(--nombre).
+   ========================================================= */
+:root {
+    /* Paleta — Rosa empolvado */
+    --color-fondo:    #f3dcc1;  /* beige clarito, fondo general */
+    --color-texto:    #3a2e2a;  /* marrón oscuro, texto principal */
+    --color-acento:   #d4a59a;  /* rosa terracota, detalles */
+    --color-detalle:  #b8736a;  /* rojo apagado, énfasis */
+    --color-tenue:    #e8d5cf;  /* rosa muy suave, fondos secundarios */
+
+    /* Tipografías */
+    --fuente-titulo: 'Dancing Script', cursive;
+    --fuente-texto:  'Inter', sans-serif;
+
+    /* Tamaños recurrentes (ayuda a mantener proporción) */
+    --max-ancho:     1100px;   /* el contenido nunca pasa de este ancho */
+    --espacio-seccion: 8rem;   /* espacio vertical entre secciones (rem = relativo a tamaño base) */
+}
+
+
+/* =========================================================
+   3. RESET BÁSICO
+   Quita estilos por defecto del navegador para empezar limpio.
+   * = todos los elementos.
+   box-sizing: border-box hace que padding y borde NO sumen al ancho
+   (regla de oro moderna; siempre úsala).
+   ========================================================= */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+img {
+    max-width: 100%;   /* ninguna imagen se sale de su contenedor */
+    display: block;    /* quita un espacio raro debajo de las imágenes */
+}
+
+
+/* =========================================================
+   4. ESTILOS BASE DEL DOCUMENTO
+   ========================================================= */
+body {
+    background: var(--color-fondo);
+    color: var(--color-texto);
+    font-family: var(--fuente-texto);
+    font-weight: 300;            /* texto fino, más elegante */
+    line-height: 1.7;            /* espacio entre líneas; legible */
+    -webkit-font-smoothing: antialiased;  /* tipografía más suave en Mac */
+}
+
+h1, h2, h3 {
+    font-family: var(--fuente-titulo);
+    font-weight: 700;
+    line-height: 1.2;
+    color: var(--color-texto);
+}
+
+h1 { font-size: clamp(3rem, 8vw, 6rem); }   /* clamp(min, ideal, max) — responsivo automático */
+h2 { font-size: clamp(2.2rem, 5vw, 3.5rem); }
+
+
+/* =========================================================
+   5. CLASES UTILITARIAS
+   ========================================================= */
+
+/* Encabezado de cada sección — etiqueta + título centrados */
+.seccion-encabezado {
+    text-align: center;
+    margin-bottom: 4rem;
+}
+
+.seccion-etiqueta {
+    font-family: var(--fuente-texto);
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.3em;       /* texto espaciado, look editorial */
+    color: var(--color-detalle);
+    margin-bottom: 1rem;
+}
+
+
+/* =========================================================
+   6. CLASE .fade-in
+   Estado inicial: invisible y desplazado 30px hacia abajo.
+   En Etapa 4, JavaScript añadirá la clase .visible
+   que lo dejará visible y en su sitio (transición suave).
+   ========================================================= */
+.fade-in {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+}
+
+.fade-in.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+
+/* =========================================================
+   7. SECCIÓN HERO (la portada)
+   Ocupa toda la pantalla con min-height: 100vh.
+   Layout en CSS Grid de 2 filas: contenido arriba, foto abajo.
+   ========================================================= */
+.hero {
+    min-height: 100vh;
+    display: grid;
+    grid-template-rows: 1fr auto auto;   /* 1ª fila se estira, 2ª y 3ª toman su contenido */
+    align-items: center;
+    justify-items: center;
+    padding: 4rem 2rem 2rem;
+    text-align: center;
+    gap: 3rem;
+}
+
+.hero-contenido {
+    max-width: 600px;
+}
+
+.hero-fecha {
+    font-family: var(--fuente-texto);
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.4em;
+    color: var(--color-detalle);
+    margin-bottom: 1.5rem;
+}
+
+.hero-titulo {
+    color: var(--color-detalle);
+    margin-bottom: 1rem;
+}
+
+.hero-subtitulo {
+    font-size: 1.1rem;
+    color: var(--color-texto);
+    opacity: 0.7;
+    font-style: italic;
+}
+
+.hero-imagen {
+    width: min(420px, 80vw);     /* 420px o 80% de la pantalla, lo que sea menor */
+    aspect-ratio: 4 / 5;          /* proporción retrato */
+    object-fit: cover;            /* la imagen se recorta, no se deforma */
+    border-radius: 8px;
+    box-shadow: 0 20px 60px -20px rgba(58, 46, 42, 0.3);
+}
+
+.hero-scroll {
+    font-family: var(--fuente-texto);
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.3em;
+    color: var(--color-detalle);
+    opacity: 0.6;
+}
+
+.flecha-abajo {
+    margin-top: 0.5rem;
+    font-size: 1.2rem;
+    animation: rebotar 2s ease-in-out infinite;
+}
+
+/* Animación @keyframes — define los pasos de la animación.
+   La flecha sube 8px y baja, en bucle. */
+@keyframes rebotar {
+    0%, 100% { transform: translateY(0); }
+    50%      { transform: translateY(-8px); }
+}
+
+
+/* =========================================================
+   8. SECCIÓN GALERÍA
+   Grid responsivo con auto-fit + minmax — sin media queries.
+   ========================================================= */
+.galeria {
+    max-width: var(--max-ancho);
+    margin: 0 auto;                          /* centra el bloque horizontalmente */
+    padding: var(--espacio-seccion) 2rem;
+}
+
+.galeria-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 2rem;
+}
+
+.galeria-item {
+    margin: 0;                               /* <figure> trae margen por defecto, se quita */
+}
+
+.galeria-item img {
+    width: 100%;
+    aspect-ratio: 1 / 1;                     /* todas las fotos cuadradas */
+    object-fit: cover;
+    border-radius: 4px;
+    transition: transform 0.4s ease, filter 0.4s ease;
+}
+
+.galeria-item:hover img {
+    transform: scale(1.02);                  /* zoom sutil al pasar el ratón */
+    filter: brightness(1.05);
+}
+
+.galeria-item figcaption {
+    margin-top: 1rem;
+    font-size: 0.9rem;
+    color: var(--color-texto);
+    opacity: 0.75;
+    font-style: italic;
+    text-align: center;
+}
+
+
+/* =========================================================
+   9. SECCIÓN CARTA
+   Centrada, mucho aire alrededor. Cada párrafo se anima
+   por separado gracias a la clase .fade-in que ya tienen.
+   ========================================================= */
+.carta {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: var(--espacio-seccion) 2rem;
+}
+
+.carta-cuerpo {
+    text-align: center;
+}
+
+.carta-cuerpo p {
+    margin-bottom: 1.8rem;
+    font-size: 1.15rem;
+    line-height: 1.9;
+    color: var(--color-texto);
+}
+
+.carta-cuerpo p:first-child {
+    font-style: italic;
+    color: var(--color-detalle);
+    font-size: 1.25rem;
+    margin-bottom: 2.5rem;
+}
+
+.carta-firma {
+    font-family: var(--fuente-titulo);
+    font-size: 1.8rem;
+    color: var(--color-detalle);
+    margin-top: 3rem;
+}
+
+
+/* =========================================================
+   10. SECCIÓN MOMENTO FAVORITO
+   Layout en 2 columnas: imagen a la izquierda (sticky)
+   y texto a la derecha que va pasando con el scroll.
+   ========================================================= */
+.favorito {
+    max-width: var(--max-ancho);
+    margin: 0 auto;
+    padding: var(--espacio-seccion) 2rem;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: start;          /* importante: para que sticky funcione bien */
+}
+
+.favorito-imagen {
+    position: sticky;
+    top: 5rem;                   /* a 5rem del borde superior cuando se "pegue" */
+
+    /* === Slideshow de 2 fotos con crossfade ===
+       El padre define el "marco": tamaño, esquinas redondeadas y sombra.
+       Las imágenes irán superpuestas dentro, en posición absoluta. */
+    aspect-ratio: 4 / 5;
+    border-radius: 4px;
+    overflow: hidden;            /* recorta lo que se salga del marco redondeado */
+    box-shadow: 0 20px 60px -20px rgba(58, 46, 42, 0.25);
+}
+
+.favorito-imagen img {
+    /* position: absolute + inset: 0 = la imagen llena completamente al padre,
+       una encima de otra (apiladas). */
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+
+    /* Animación: cada imagen alterna entre visible (opacity 1) e invisible (0).
+       Duración 8s en total = 4s visible cada una + medio segundo de fundido. */
+    opacity: 0;
+    animation: cruzar 8s infinite ease-in-out;
+}
+
+/* La 1ª imagen empieza el ciclo en el segundo 0 (visible).
+   La 2ª lleva 4s "adelantada" — animation-delay negativo —
+   así está en la fase invisible cuando la 1ª está visible.
+   Resultado: alternan perfectamente sin necesidad de JavaScript. */
+.favorito-imagen img:nth-child(1) { animation-delay: 0s;  }
+.favorito-imagen img:nth-child(2) { animation-delay: -4s; }
+
+@keyframes cruzar {
+    0%, 45%   { opacity: 1; }   /* visible 0% al 45% del ciclo (3.6s) */
+    50%, 95%  { opacity: 0; }   /* invisible 50% al 95% (también 3.6s) */
+    100%      { opacity: 1; }   /* vuelve a visible (suaviza el bucle) */
+}
+
+.favorito-texto {
+    padding: 2rem 0;
+}
+
+.favorito-texto .seccion-encabezado {
+    text-align: left;
+    margin-bottom: 2.5rem;
+}
+
+.favorito-texto p {
+    font-size: 1.1rem;
+    margin-bottom: 1.5rem;
+    line-height: 1.9;
+}
+
+/* En móvil: una sola columna y la imagen ya no es sticky */
+@media (max-width: 768px) {
+    .favorito {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+    }
+    .favorito-imagen {
+        position: static;
+    }
+    .favorito-texto .seccion-encabezado {
+        text-align: center;
+    }
+}
+
+
+/* =========================================================
+   11. SECCIÓN CIERRE
+   Fondo con un gradiente sutil y corazones flotando.
+   ========================================================= */
+.cierre {
+    position: relative;
+    overflow: hidden;            /* los corazones que se salen no se ven */
+    padding: 8rem 2rem;
+    text-align: center;
+    background: linear-gradient(180deg, var(--color-fondo) 0%, var(--color-tenue) 100%);
+}
+
+.cierre-contenido {
+    position: relative;
+    z-index: 2;                  /* por encima de los corazones */
+}
+
+.cierre-contenido h2 {
+    font-size: clamp(2.5rem, 6vw, 4rem);
+    color: var(--color-detalle);
+    margin-bottom: 1rem;
+}
+
+.cierre-contenido p {
+    font-size: 1.2rem;
+    margin-bottom: 0.5rem;
+    color: var(--color-texto);
+    opacity: 0.8;
+}
+
+.cierre-firma {
+    margin-top: 2rem !important;
+    font-family: var(--fuente-titulo);
+    font-size: 1.5rem;
+    color: var(--color-detalle);
+}
+
+/* Corazones que flotan de abajo arriba.
+   Cada uno tiene un retraso (animation-delay) y posición
+   horizontal distinta, así parecen naturales. */
+.corazones-fondo {
+    display: block;
+    position: absolute;
+    inset: 0;                    /* ocupa todo el contenedor */
+    pointer-events: none;        /* no bloquean clicks */
+}
+
+.corazon {
+    position: absolute;
+    bottom: -50px;
+    font-size: 1.5rem;
+    color: var(--color-acento);
+    opacity: 0;
+    animation: flotar 8s ease-in infinite;
+}
+
+.corazon:nth-child(1) { left: 10%; animation-delay: 0s;   font-size: 1.2rem; }
+.corazon:nth-child(2) { left: 30%; animation-delay: 2s;   font-size: 1.8rem; }
+.corazon:nth-child(3) { left: 55%; animation-delay: 4s;   font-size: 1.4rem; }
+.corazon:nth-child(4) { left: 75%; animation-delay: 1s;   font-size: 1.6rem; }
+.corazon:nth-child(5) { left: 90%; animation-delay: 3s;   font-size: 1.3rem; }
+
+/* Animación: el corazón sube desde abajo, aparece, sigue
+   subiendo y se desvanece. */
+@keyframes flotar {
+    0%   { transform: translateY(0)     scale(1);   opacity: 0; }
+    20%  {                              opacity: 0.7; }
+    100% { transform: translateY(-120vh) scale(1.2); opacity: 0; }
+}
+
+
+/* =========================================================
+   12. BOTÓN DE MÚSICA — estilo final
+   Flotando en la esquina, con efecto al pasar el ratón.
+   ========================================================= */
+.boton-musica {
+    position: fixed;
+    bottom: 1.5rem;
+    right: 1.5rem;
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    border: none;
+    background: var(--color-detalle);
+    color: white;
+    font-size: 1.1rem;
+    cursor: pointer;
+    box-shadow: 0 8px 24px -6px rgba(184, 115, 106, 0.5);
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.25s ease, box-shadow 0.25s ease, background 0.25s ease;
+}
+
+.boton-musica:hover {
+    transform: scale(1.08);
+    background: var(--color-acento);
+    box-shadow: 0 12px 32px -6px rgba(184, 115, 106, 0.6);
+}
+
+.boton-musica:active {
+    transform: scale(0.95);
+}
+
+
+/* =========================================================
+   13. ACCESIBILIDAD — respeta a quien prefiere menos movimiento
+   Si el usuario tiene activado "reduce motion" en su sistema,
+   apagamos las animaciones. Esto es estándar moderno.
+   ========================================================= */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+    .fade-in {
+        opacity: 1;
+        transform: none;
+    }
+}
+
+
+/* =========================================================
+   14. AJUSTES RESPONSIVE FINALES
+   ========================================================= */
+@media (max-width: 600px) {
+    :root {
+        --espacio-seccion: 5rem;     /* menos aire en móvil */
+    }
+    .hero {
+        padding: 3rem 1.5rem 2rem;
+        gap: 2rem;
+    }
+    .galeria,
+    .carta,
+    .favorito,
+    .cierre {
+        padding-left: 1.5rem;
+        padding-right: 1.5rem;
+    }
+    .galeria-grid {
+        gap: 1.5rem;
+    }
+    .boton-musica {
+        bottom: 1rem;
+        right: 1rem;
+        width: 46px;
+        height: 46px;
+    }
+}

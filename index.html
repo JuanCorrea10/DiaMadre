@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Feliz Día de la Madre, Mamá</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+    <!-- =========================================================
+         SECCIÓN 1 — HERO (la portada)
+         Es lo primero que verá mamá al abrir la página.
+         ========================================================= -->
+    <header class="hero">
+        <div class="hero-contenido">
+            <p class="hero-fecha">10 de mayo · 2026</p>
+            <h1 class="hero-titulo">Feliz Día, Mamá</h1>
+            <p class="hero-subtitulo">Una pequeña carta con todo lo que eres para mí</p>
+            <p class="hero-subtitulo">Por: Juan Martín</p>
+        </div>
+        <img src="img/hero.jpg" alt="Mi mamá" class="hero-imagen">
+        <div class="hero-scroll">
+            <span>desliza para descubrir</span>
+            <div class="flecha-abajo">↓</div>
+        </div>
+    </header>
+
+    <main>
+
+        <!-- =========================================================
+             SECCIÓN 2 — GALERÍA DE RECUERDOS
+             Una rejilla (grid) con 6 fotos. Cada una con un pie.
+             ========================================================= -->
+        <section class="galeria" id="galeria">
+            <div class="seccion-encabezado fade-in">
+                <p class="seccion-etiqueta">— Recuerdos —</p>
+                <h2>Momentos lindos</h2>
+            </div>
+
+            <div class="galeria-grid">
+                <figure class="galeria-item fade-in">
+                    <img src="img/foto1.jpg" alt="Recuerdo 1">
+                    <figcaption>Cuando te veias con tu mejor amiga.</figcaption>
+                </figure>
+                <figure class="galeria-item fade-in">
+                    <img src="img/foto2.jpg" alt="Recuerdo 2">
+                    <figcaption>Cuando fuiste de viaje con tu familia.</figcaption>
+                </figure>
+                <figure class="galeria-item fade-in">
+                    <img src="img/foto3.jpg" alt="Recuerdo 3">
+                    <figcaption>Cuando te diste un descanso con tus amigas.</figcaption>
+                </figure>
+                <figure class="galeria-item fade-in">
+                    <img src="img/foto4.jpg" alt="Recuerdo 4">
+                    <figcaption>Cuando nos consentias todo el tiempo.</figcaption>
+                </figure>
+                <figure class="galeria-item fade-in">
+                    <img src="img/foto5.jpg" alt="Recuerdo 5">
+                    <figcaption>Cuando disfrutabas de Bogotá.</figcaption>
+                </figure>
+                <figure class="galeria-item fade-in">
+                    <img src="img/foto6.jpg" alt="Recuerdo 6">
+                    <figcaption>Cuando celebramos mi cumpleaños.</figcaption>
+                </figure>
+            </div>
+        </section>
+
+        <!-- =========================================================
+             SECCIÓN 3 — CARTA
+             Mucho espacio en blanco. La carta aparece párrafo a párrafo.
+             ========================================================= -->
+        <section class="carta" id="carta">
+            <div class="seccion-encabezado fade-in">
+                <p class="seccion-etiqueta">— Carta —</p>
+                <h2>Para ti, Mamá</h2>
+            </div>
+
+            <div class="carta-cuerpo">
+                <p class="fade-in">Querida mamá,</p>
+                <p class="fade-in">Te quiero mucho, siempre te agradecere todos los sacrificios que has hecho por nosotros.</p>
+                <p class="fade-in">Cuando nos llevabas al medico o te sentabas a hacer tareas con nosotros apesar de que estuvieras cansada</p>
+                <p class="fade-in">Admiro tu fuerza y tus ganas de siempre seguir adelante</p>
+                <p class="fade-in">Y ojala disfrutes mucho este dia tan especial</p>
+                <p class="fade-in carta-firma">Con todo mi amor,<br>Juan</p>
+            </div>
+        </section>
+
+        <!-- =========================================================
+             SECCIÓN 4 — MOMENTO FAVORITO
+             Una foto grande pegada a la izquierda (sticky)
+             mientras el texto pasa al lado.
+             ========================================================= -->
+        <section class="favorito" id="favorito">
+            <div class="favorito-imagen">
+                <img src="img/favorita1.jpg" alt="Momento favorito 1">
+                <img src="img/favorita.png" alt="Momento favorito 2">
+            </div>
+            <div class="favorito-texto">
+                <div class="seccion-encabezado fade-in">
+                    <p class="seccion-etiqueta">— Mis momento favorito de estos ultimos años —</p>
+                    <h2>El día que…</h2>
+                </div>
+                <p class="fade-in">Cuando querias pasar tiempo en familia con nosotros, asi que nos llevaste a las cascadas, donde nos reimos y disfrutamos como familia</p>
+                <p class="fade-in">O cuando fuimos a tolú junto a los titos y la pasamos muy rico</p>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- =========================================================
+         SECCIÓN 5 — CIERRE
+         Mensaje final corto + corazones flotando.
+         ========================================================= -->
+    <footer class="cierre">
+        <div class="corazones-fondo" aria-hidden="true">
+            <span class="corazon">♥</span>
+            <span class="corazon">♥</span>
+            <span class="corazon">♥</span>
+            <span class="corazon">♥</span>
+            <span class="corazon">♥</span>
+        </div>
+        <div class="cierre-contenido fade-in">
+            <h2>Te amamos, mamá</h2>
+            <p>Hoy y siempre.</p>
+            <p class="cierre-firma">— Juan Martín, tu hijo mayor favorito</p>
+        </div>
+    </footer>
+
+    <!-- =========================================================
+         REPRODUCTOR DE MÚSICA
+         La etiqueta <audio> queda invisible (sin "controls").
+         El botón de abajo será el que la controle vía JavaScript.
+         ========================================================= -->
+    <audio id="cancion" src="audio/Erasure - A Little Respect (Official HD Music Video).mp3" loop></audio>
+    <button id="boton-musica" class="boton-musica" aria-label="Reproducir música">
+        <span class="icono-play">▶</span>
+        <span class="icono-pausa" hidden>⏸</span>
+    </button>
+
+    <script src="script.js"></script>
+</body>
+</html>
