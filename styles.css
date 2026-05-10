@@ -333,18 +333,51 @@ h2 { font-size: clamp(2.2rem, 5vw, 3.5rem); }
     line-height: 1.9;
 }
 
-/* En móvil: una sola columna y la imagen ya no es sticky.
-   Ahora podemos usar position: static sin problema porque las imágenes
-   están dentro del grid del padre, no posicionadas absolutamente. */
+/* === MÓVIL — versión simplificada (progressive enhancement) ===
+   Los navegadores móviles (iOS Safari, Chrome Android) tienen bugs conocidos
+   con la combinación display:grid + aspect-ratio + animación en hijos apilados.
+   En vez de pelear con eso, en móvil mostramos una sola foto fija sin animación.
+   En escritorio el slideshow funciona perfecto, así que solo lo desactivamos
+   donde da problemas. */
 @media (max-width: 768px) {
     .favorito {
         grid-template-columns: 1fr;
         gap: 2rem;
     }
+
+    /* Quitamos sticky, grid-stacking, aspect-ratio del padre */
     .favorito-imagen {
         position: static;
-        top: auto;                /* anula el top: 5rem del sticky */
+        top: auto;
+        display: block;
+        aspect-ratio: auto;
+        max-width: 360px;          /* la imagen no domina la pantalla */
+        margin: 0 auto;
+        border-radius: 0;          /* el estilo pasa al <img> */
+        overflow: visible;
+        box-shadow: none;
     }
+
+    /* Imágenes en flujo normal, primera visible, segunda oculta */
+    .favorito-imagen img {
+        grid-area: auto;
+        position: static;
+        width: 100%;
+        height: auto;
+        opacity: 1;                /* siempre visible (sin animación) */
+        animation: none;
+        aspect-ratio: 4 / 5;
+        max-height: 65vh;          /* nunca más alta que 65% de la pantalla */
+        object-fit: cover;
+        border-radius: 4px;
+        box-shadow: 0 20px 60px -20px rgba(58, 46, 42, 0.25);
+    }
+
+    /* Solo se ve la primera foto en móvil */
+    .favorito-imagen img:nth-child(2) {
+        display: none;
+    }
+
     .favorito-texto .seccion-encabezado {
         text-align: center;
     }
